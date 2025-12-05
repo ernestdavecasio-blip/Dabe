@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ernest Dave Casio | Portfolio</title>
+    <style>
+        /* ================== GLOBAL STYLES ================== */
+        :root {
+            --text-color: #2F4A2F;
+            --nav-bg: rgba(255,255,255,0.9);
+            --btn-primary-bg: #2F4A2F;
+            --btn-primary-hover: #1F351F;
+            --btn-outline-border: #2F4A2F;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: var(--text-color);
+            scroll-behavior: smooth;
+            transition: color 0.5s;
+        }
+
+        /* ================== BACKGROUND LAYERS ================== */
+        #background-light,
+        #background-dark {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -2;
+            transition: opacity 1s ease-in-out, filter 1s ease-in-out;
+            pointer-events: none;
+        }
+
+        #background-light {
+            background-image: url('trippy-groovy-hippie-background-abstract-retro-psychedelic-style-backdrop-pastel-green-waves-swirl-twirl-and-stars-or-sparkles-pattern-twisted-distorted-.jpg');
+            opacity: 1;
+            filter: blur(2px);
+        }
+
+        #background-dark {
+            background-image: url('unnamed.jpg');
+            opacity: 0;
+            filter: blur(2px);
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(163, 220, 154, 0.3); /* light overlay */
+            z-index: -1;
+            transition: background-color 1s ease-in-out;
+        }
+
+        body.dark-mode #overlay {
+            background-color: rgba(30, 30, 30, 0.5); /* dark overlay */
+        }
+
+        body.dark-mode #background-light {
+            opacity: 0;
+        }
+
+        body.dark-mode #background-dark {
+            opacity: 1;
+        }
+
+        body.dark-mode {
+            color: white; /* keep dark mode text white */
+        }
+
+        /* ================== NAVIGATION ================== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            background: var(--nav-bg);
+            padding: 15px 50px;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 0 0 20px 20px;
+        }
+
+        nav a {
+            margin: 0 20px;
+            text-decoration: none;
+            font-weight: 600;
+            color: var(--text-color);
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--btn-primary-hover);
+        }
+
+        /* ================== DARK/LIGHT MODE BUTTON ================== */
+        #mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            background-color: var(--btn-primary-bg);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 200;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        #mode-toggle:hover {
+            background-color: var(--btn-primary-hover);
+            transform: scale(1.05);
+        }
+
+        /* ================== SECTIONS ================== */
+        section {
+            min-height: 100vh;
+            padding: 100px 50px 50px 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .hero .left {
+            max-width: 50%;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .hero h2 {
+            font-size: 28px;
+            font-weight: 600;
+            margin: 0 0 20px 0;
+        }
+
+        .hero p {
+            font-size: 20px;
+            line-height: 1.5;
+        }
+
+        .btn-group {
+            margin-top: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-right: 15px;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background-color: var(--btn-primary-bg);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--btn-primary-hover);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--btn-outline-border);
+            color: var(--btn-outline-border);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--btn-primary-bg);
+            color: white;
+        }
+
+        .hero .right img {
+            width: 380px;
+            height: 480px;
+            object-fit: cover;
+            border-radius: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .hero .right img:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 20px 35px rgba(0,0,0,0.3);
+        }
+
+        #about, #skills, #contact {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        #about h2, #skills h2, #contact h2 {
+            font-size: 36px;
+            margin-bottom: 5px;
+        }
+
+        #about p, #skills p, #contact p, #contact ul {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        #skills ul, #contact ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #skills li, #contact li {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        #contact a {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            border: 2px solid var(--text-color);
+            padding: 10px 25px;
+            border-radius: 25px;
+            transition: 0.3s;
+        }
+
+        #contact a:hover {
+            background-color: var(--btn-primary-bg);
+            color: white;
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero .left, .hero .right {
+                max-width: 100%;
+            }
+
+            .hero .right img {
+                width: 300px;
+                height: 380px;
+                margin-top: 30px;
+            }
+
+            #mode-toggle {
+                top: 15px;
+                right: 15px;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BACKGROUND LAYERS -->
+    <div id="background-light"></div>
+    <div id="background-dark"></div>
+    <div id="overlay"></div>
+
+    <!-- DARK/LIGHT MODE TOGGLE -->
+    <button id="mode-toggle">Dark Mode</button>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <a href="#hero">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="hero">
+        <div class="left">
+            <h2>Hello!</h2>
+            <h1>I am Ernest Dave Casio</h1>
+            <p>I am currently a second-year BSIT student at Cebu Technological University.</p>
+            <div class="btn-group">
+                <a href="#about" class="btn btn-primary">More Info</a>
+                <a href="#contact" class="btn btn-outline">Contact Me</a>
+            </div>
+        </div>
+        <div class="right">
+            <img src="536267358_1586658372312762_82583226481166547_n.jpg" alt="Profile Photo">
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about">
+        <h2>About Me</h2>
+        <p>
+            I'm currently a second-year BSIT student at Cebu Technological University, taking things one step at a time as I learn more about technology and build small projects.
+            I love exploring new ideas and picking up new skills whenever I can. 
+            I'm always trying to grow—whether that's improving my tech abilities, experimenting with something new, or working on projects that push me to think differently. 
+            I'm also the type who adapts easily, whether it's with school, life, or anything unexpected.
+            And outside of all the IT stuff, I'm a barista too, balancing code and coffee on the daily. 
+            Plus, I'm a huge lover of cats and dogs—they definitely make everything better.
+        </p>
+    </section>
+
+    <!-- SKILLS SECTION -->
+    <section id="skills">
+        <h2>My Skills</h2>
+        <ul>
+            <li>Web Development: HTML, CSS</li>
+            <li>Programming: Python, Java</li>
+            <li>Database Management: N/A</li>
+            <li>Version Control: N/A</li>
+            <li>Problem Solving & Algorithm Design</li>
+        </ul>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <ul>
+            <li>Address: Bankal, Kalubihan, Lapu-Lapu City</li>
+            <li>Mobile No: 09929772290</li>
+            <li>Email: ernestdavecasio@gmail.com</li>
+        </ul>
+        <a href="mailto:ernestdavecasio@gmail.com">Email Me</a>
+    </section>
+
+    <!-- SCRIPT FOR DARK MODE + FADE -->
+    <script>
+        const toggleBtn = document.getElementById('mode-toggle');
+        toggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            toggleBtn.textContent = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
+        });
+    </script>
+
+</body>
+</html>
